@@ -1,0 +1,150 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <template if:true={shift}>
+        <div class="slds-col slds-var-m-top_x-small">
+            <lightning-card>
+                <h3 slot="title">
+                    <lightning-icon icon-name="standard:person_name" size="small"></lightning-icon>
+                    &nbsp; {shift.sirenum__Team__r.Name}
+                </h3>
+                  <div class="slds-m-vertical_large">
+                    <lightning-progress-indicator class="slds-align_absolute-center" current-step={currentStep} type="base" variant="base">
+                      <lightning-progress-step label="Shortlist" value="1"></lightning-progress-step>
+                      <lightning-progress-step label="Application" value="2"></lightning-progress-step>
+                      <lightning-progress-step label="Interview" value="3"></lightning-progress-step>
+                      <lightning-progress-step label="Offer" value="4"></lightning-progress-step>
+                      <lightning-progress-step label="Placed" value="5"></lightning-progress-step>
+                    </lightning-progress-indicator>
+                  </div>
+
+                    <br>
+                    <div class="slds-grid slds-gutters">
+                      <div class="slds-col slds-size_3-of-12">
+                        <div class="slds-grid slds-grid_vertical">
+                          <div class="slds-col">
+                            <lightning-icon icon-name="standard:account" alternative-text="Info!" variant="info" class="slds-m-around_small slds-col"
+                              title="info variant small" size="small"> </lightning-icon>
+                            <lightning-formatted-text class="slds-form-element__label slds-col" value={shift.sirenum__Site__r.Name}>
+                            </lightning-formatted-text>
+                          </div>
+                          <div class="slds-col">
+                            <lightning-icon icon-name="standard:employee_job_position" alternative-text="Info!" variant="info"
+                              class="slds-m-around_small slds-col" title="info variant small" size="small"> </lightning-icon>
+                            <lightning-formatted-text class="slds-form-element__label slds-col" value={shift.sirenum__Team__r.Name}>
+                            </lightning-formatted-text>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="slds-col slds-size_3-of-12">
+                        <div class="slds-grid slds-grid_vertical">
+                          <div class="slds-col">
+                            <lightning-icon icon-name="utility:date_input" alternative-text="Info!" variant="info"
+                              class="slds-m-around_small slds-col" title="info variant small" size="small"> </lightning-icon>
+                            <lightning-formatted-text class="slds-form-element__label slds-col" value={shift.sirenum__Shift_Date__c}>
+                            </lightning-formatted-text>
+                          </div>
+                          <div class="slds-col">
+                            <lightning-icon icon-name="utility:clock" alternative-text="Info!" variant="info"
+                              class="slds-m-around_small slds-col" title="info variant small" size="small"> </lightning-icon>
+                            <lightning-formatted-text class="slds-form-element__label slds-col" value={shiftScheduledStartTime}>
+                            </lightning-formatted-text>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                      <div class="slds-col slds-size_1-of-2">
+                        <template if:true={fullPhotoUrl}>
+                          <div class="slds-m-around_small">
+                            <img src={fullPhotoUrl} alt="This should be he consultants headshot">
+                          </div>
+                          <div class="slds-m-around_small">
+                            <p class="slds-var-p-horizontal_small"> <b> { shift.Owner.Name } </b> </p>
+                          </div>
+                          <div class="slds-m-around_small">
+                            <lightning-button label="Contact Me" onclick={openModal}></lightning-button>
+                          </div>
+                        </template>
+                        <template if:false={fullPhotoUrl}>
+                          <div class="slds-m-around_small">
+                            <img src="https://i.imgur.com/lL45vaX.png" alt="This should be he consultants headshot">
+                          </div>
+                          <div class="slds-m-around_small">
+                            <p class="slds-var-p-horizontal_small"> <b>Recruiter:  { shift.Owner.Name } </b> </p>
+                          </div>
+                          <div class="slds-m-around_small">
+                            <lightning-button label="Contact Me" onclick={openModal}></lightning-button>
+                          </div>
+                        </template>
+                            <!--Use template if:true to display/hide popup based on isModalOpen value--> 
+                            <template if:true={isModalOpen}>
+                              <!-- Modal/Popup Box LWC starts here -->
+                              <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                  <div class="slds-modal__container">
+                                      <!-- Modal/Popup Box LWC header here -->
+                                      <header class="slds-modal__header">
+                                          <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                                              <lightning-icon icon-name="utility:close"
+                                                  alternative-text="close"
+                                                  variant="inverse"
+                                                  size="small" ></lightning-icon>
+                                              <span class="slds-assistive-text">Close</span>
+                                          </button>
+                                          <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Contact Me</h2>
+                                      </header>
+                                      <!-- Modal/Popup Box LWC body starts here -->
+                                      <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                          <p><b>Please enter your message for me below.</b></p>
+                                          <div class="slds-form-element">
+                                            <div class="slds-form-element__control">
+                                              <textarea id="textarea-id-01" placeholder="Placeholder text…" class="slds-textarea"></textarea>
+                                            </div>
+                                          </div>
+                                      </div>
+                                      <!-- Modal/Popup Box LWC footer starts here -->
+                                      <footer class="slds-modal__footer">
+                                          <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+                                          <button class="slds-button slds-button_brand" onclick={submitDetails} title="OK">OK</button>
+                                      </footer>
+                                  </div>
+                              </section>
+                              <div class="slds-backdrop slds-backdrop_open"></div>
+                            </template>
+                      </div>
+                      <div class="slds-col slds-size_1-of-2">
+                        <div class="slds-align_absolute-center" style="height:9rem">
+                          <div class="slds-m-top_x-small">
+                            <lightning-map map-markers={mapMarkers} zoom-level="10"> </lightning-map>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <template if:true={details}>
+                        <br>
+                        <div class="slds-var-m-left_x-small">
+                            <lightning-layout>
+                                <lightning-layout-item>
+                                <lightning-record-form
+                                    record-id={shift.Id}
+                                    object-api-name="sirenum__Shift__c"
+                                    fields={Fields}
+                                    columns="1"
+                                    mode="readonly">
+                                </lightning-record-form>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                            <!-- <div class="slds-m-around_medium">
+                              <lightning-badge label='Moderate Salary'></lightning-badge>
+                              <lightning-badge label='LTIP'></lightning-badge>
+                              <lightning-badge label='Shares'></lightning-badge>
+                              <lightning-badge label='Autonomy'></lightning-badge>
+                            </div> -->
+                        </div>
+                    </template>
+                <lightning-button class= "slds-m-horizontal_x-small" label="Details" slot="footer" onclick={expandDetails}></lightning-button>
+                <lightning-button class= "slds-m-horizontal_x-small" label="Find Workers" slot="footer" onclick={tileClick}></lightning-button>
+            </lightning-card>
+        </div>
+    </template>
+</template>

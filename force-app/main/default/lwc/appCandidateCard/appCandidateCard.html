@@ -1,0 +1,29 @@
+<template>
+    <template if:true={domain}>
+        <div class="slds-col slds-var-m-top_x-small">
+            <lightning-card>
+                <template if:true={candData}>
+                  <h3 slot="title">
+                    <lightning-icon icon-name="standard:contact" size="medium"></lightning-icon>
+                    &nbsp; {candData.Name}
+                  </h3>
+                  <div class="slds-grid slds-grid_vertical">
+                    <div class="slds-col">
+                      <lightning-icon icon-name="utility:advanced_function" alternative-text="Info!" variant="info"
+                        class="slds-m-around_small slds-col" title="info variant small" size="x-small"> </lightning-icon>
+                      <lightning-formatted-number class="slds-form-element__label slds-col" value={domain.sirenum__Score__c}>
+                      </lightning-formatted-number>
+                    </div>
+                    <div class="slds-col">
+                      <lightning-icon icon-name="utility:date_input" alternative-text="Info!" variant="info"
+                        class="slds-m-around_small slds-col" title="info variant small" size="x-small"> </lightning-icon>
+                      <lightning-formatted-text class="slds-form-element__label slds-col" value={candData.Title}>
+                      </lightning-formatted-text>
+                    </div>
+                  </div>
+                  <lightning-button class= "slds-m-horizontal_x-small" label="Request Worker" slot="footer"></lightning-button>
+                </template>
+            </lightning-card>
+        </div>
+    </template>
+</template>
